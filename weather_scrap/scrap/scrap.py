@@ -4,7 +4,7 @@ import requests
 def country(name):
     BASE_URL = "https://api.openweathermap.org/data/2.5/weather?"
     CITY = name
-    API_KEY = "1488308f0e7a8084f85609c189098180"
+    API_KEY = "Please enter your openweathermap API KEY"
     # upadting the URL
     URL = BASE_URL + "q=" + CITY + "&appid=" + API_KEY
     # HTTP request
