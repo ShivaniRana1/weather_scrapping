@@ -8,8 +8,7 @@ def description(latitude,longitude):
     # upadting the URL
     URL = BASE_URL+ lat +"," +lon+"?par=google"
     reqs = requests.get(URL)
-    print("Hello shivani Rana how do you do?")
-    
+   
     # using the BeautifulSoup module
     soup = BeautifulSoup(reqs.text, 'html.parser')
     product_div = soup.find('h1',class_="CurrentConditions--location--kyTeL")
