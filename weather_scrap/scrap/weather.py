@@ -35,7 +35,7 @@ def description(latitude,longitude):
     forecast = {
     "title":product_div.text,
     "Temperature":temp,
-    "Wind":wind[1],
+    "Wind":wind[0].replace("Wind Direction",""),
     "Weather":product_div3.text,
     "Description":description
     }
