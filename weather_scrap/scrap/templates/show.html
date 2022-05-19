@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Django Form Exemplo</title>
+                 <link rel="stylesheet" href="{% static 'table.css' %}"/>
+        </head>
+<body>
+    <div >
+        <center>
+            <br></br>
+        <form action="home/" method="post">
+            {% csrf_token %}
+            <br></br>
+            
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name of City</th>
+                        <th>Temperature(degree)</th>
+                        <th>Wind Speed</th>
+                        <th>Weather</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="active-row">
+                        <td>{{data.title}}</td>
+                        <td>{{data.Temperature}}</td>
+                        <td>{{data.Wind}}</td>
+                        <td>{{data.Weather}}</td>
+                        <td>{{data.Description}}</td>
+                    </tr>
+                    <!-- and so on... -->
+                </tbody>
+            </table>
+            <input class = "button" type="submit" value="Exit">
+            
+        </form>
+    </center>
+</div>
+
+</body>
+</html> 
