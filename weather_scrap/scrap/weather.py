@@ -23,7 +23,7 @@ def description(latitude,longitude):
         wind.append(data.text) 
    
     temp = product_div1.text.strip(' ° ')
-    temp = int(temp)-47
+    temp = int(temp)
     temp = str(temp)
     for i in product_div4:
         product.append(i.text)
