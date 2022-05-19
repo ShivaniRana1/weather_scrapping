@@ -18,7 +18,6 @@ def description(latitude,longitude):
     product_div4 = soup.find_all('p',class_="InsightNotification--text--UxsQt")
     product = []
     wind = [] 
-    print("Hi shivani")
     print(product_div2)
     for data in product_div2:
         wind.append(data.text) 
