@@ -1,44 +1,53 @@
 import requests
 from bs4 import BeautifulSoup
+from geopy.geocoders import Nominatim
 
-def description(latitude,longitude):
-    BASE_URL = "https://weather.com/weather/today/l/"
-    lat= str(latitude)
-    lon= str(longitude)
-    # upadting the URL
-    URL = BASE_URL+ lat +"," +lon+"?par=google"
-    reqs = requests.get(URL)
-   
-    # using the BeautifulSoup module
-    soup = BeautifulSoup(reqs.text, 'html.parser')
-    product_div = soup.find('h1',class_="CurrentConditions--location--kyTeL")
-    product_div1 = soup.find('span',{"class":"CurrentConditions--tempValue--3a50n","data-testid":"TemperatureValue"})
-    product_div2 = soup.find_all('span',{"class":"Wind--windWrapper--3aqXJ undefined","data-testid":"Wind"})
-    product_div3 = soup.find('div',class_="CurrentConditions--phraseValue--2Z18W")
-    product_div4 = soup.find_all('p',class_="InsightNotification--text--UxsQt")
-    product = []
-    wind = [] 
-    print(product_div2)
-    for data in product_div2:
-        wind.append(data.text) 
-   
-    temp = product_div1.text.strip(' ° ')
-    temp = int(temp)
-    temp = str(temp)
-    for i in product_div4:
-        product.append(i.text)
-    if not product:
-        description = "Weather is {}".format(product_div3.text)
-    else:
-        description = product[0]
+geolocator = Nominatim(user_agent="Locating address")
+
+def description(data):
+    # Parse the JSON data
+    weather_data = data
+
+    # Extract relevant weather information
+    coordinates = weather_data.get('coord', {})
+    main_weather = weather_data.get('weather', [{}])[0]
+    main_info = weather_data.get('main', {})
+    wind_info = weather_data.get('wind', {})
+    visibility = weather_data.get('visibility')
+    city_name = weather_data.get('name')
+    country_code = weather_data.get('sys', {}).get('country')
+    
+    #converting kelvin to fahrenheit
+    temp = main_info.get('temp')
+    temp = ((temp-273.15)*(9/5))+32
+    
+    temp_feel= main_info.get('feels_like')
+    temp_feel = ((temp_feel-273.15)*(9/5))+32
+    
+    temp_min =main_info.get('temp_min')
+    temp_min = ((temp_min-273.15)*(9/5))+32
+    
+    temp_max = main_info.get('temp_max')
+    temp_max = ((temp_max-273.15)*(9/5))+32
+
+    # Build the forecast dictionary
     forecast = {
-    "title":product_div.text,
-    "Temperature":temp,
-    "Wind":wind[0].replace("Wind Direction",""),
-    "Weather":product_div3.text,
-    "Description":description
+        "title": f"{city_name}, {country_code}",
+        "Temperature": '%.3f'%(temp),
+        "Feels Like":'%.3f'%(temp_feel),
+        "Minimum Temperature": '%.3f'%(temp_min),
+        "Maximum Temperature": '%.3f'%(temp_max),
+        "Pressure": main_info.get('pressure'),
+        "Humidity": main_info.get('humidity'),
+        "Wind": wind_info.get('speed'),
+        "Wind Direction": wind_info.get('deg'),
+        "Weather": main_weather.get('main'),
+        "Description": main_weather.get('description'),
+        "Visibility": visibility
     }
+
     return forecast
+
    
 
 

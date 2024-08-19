@@ -2,7 +2,7 @@
 {% load static %}
 <html>
     <head>
-        <title>Django Form Exemplo</title>
+        <title>Walther Farms Field Weather</title>
                  <link rel="stylesheet" href="{% static 'table.css' %}"/>
         </head>
 <body>
@@ -11,6 +11,7 @@
             <br></br>
 
         <form action="/" method="post">
+            Field Name
             {% csrf_token %}
             {{ form }}
             <br></br>

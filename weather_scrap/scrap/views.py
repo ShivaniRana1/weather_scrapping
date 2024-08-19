@@ -15,7 +15,7 @@ def input(request):
             # process the data in form.cleaned_data as required
             data = form.cleaned_data
             data = country(data['city'])
-            wea = description(data["latitude"],data["longitude"])
+            wea = description(data)
             
             return render(request, 'show.html', {'form': form,'data':wea})
 
